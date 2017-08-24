@@ -1,7 +1,9 @@
 let convert;
+let radix;
  convert = function(x)
  {
-	if(isNaN(x))
+ // Checking is number or not
+ if(isNaN(x))
 	{
 		throw new Error('Not a number');
 	}
@@ -18,10 +20,13 @@ let convert;
 			let result1 = [];
 			let encoding = 'utf8';
 			const rl = readline.createInterface({
-			input: fs.createReadStream('./inputdata/Indicators.csv')
+				// Reading file form file system
+			input: fs.createReadStream('./../inputdata/Indicators.csv')
 			});
+			// Fetching line by line
 			rl.on('line', function(line) {
 				let lines = line.trim().split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+				// Checking required reqirements
 				if(lines.includes('India') && (lines.includes('Urban population (% of total)') ||
 				lines.includes('Rural population (% of total population)')))
 				{
@@ -39,20 +44,16 @@ let convert;
 				}
 			});
 			rl.on('close', function() {
-				let m = 0;
-				let n = 0;
 						for(let i1 = 1960; i1 <= 2014; i1 = i1 + 1)
 						{
-							m=0,n=0;
+							let m = 0; let n = 0;
 							output.map(function(x1)
 							{
-								if(parseInt(x1.Year) === i1)
+								if(parseInt(x1.Year, radix) === i1)
 								{
-									console.log("hell")
 									if(x1.IndicatorName === 'Urban population (% of total)')
 									{
 										m = parseFloat(x1.Value);
-										console.log("hello")
 									}
 									if(x1.IndicatorName === 'Rural population (% of total population)')
 									{
@@ -65,7 +66,9 @@ let convert;
 							result1.push(result);
 							result = {};
 						}
-						fs.writeFileSync('./outputdata/worldDevIndicatorUrbanizationRaju.json', JSON.stringify(result1), encoding);
+						// Storing data in local file
+						fs.writeFileSync('./outputdata/worldDevIndicatorUrbanizationRaju.json',
+						JSON.stringify(result1), encoding);
 					});
 
 	return 'JSON written successfully';
