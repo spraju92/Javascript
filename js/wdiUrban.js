@@ -21,7 +21,7 @@ let radix;
 			let encoding = 'utf8';
 			const rl = readline.createInterface({
 				// Reading file form file system
-			input: fs.createReadStream('./../inputdata/Indicators.csv')
+			input: fs.createReadStream('./inputdata/Indicators.csv')
 			});
 			// Fetching line by line
 			rl.on('line', function(line) {
@@ -73,5 +73,4 @@ let radix;
 
 	return 'JSON written successfully';
 };
-convert(1);
 module.exports = convert;
